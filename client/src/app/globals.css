@@ -2,20 +2,81 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 350 100% 98%;
+    --background-end: 0 0% 100%;
+    --foreground: 229 84% 5%;
+    --primary: 229 84% 5%;
+    --primary-foreground: 0 0% 100%;
+  }
+
+  .dark {
+    --background: 229 84% 5%;
+    --background-end: 0 0% 0%;
+    --foreground: 0 0% 100%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 229 84% 5%;
+  }
+
+  body {
+    @apply min-h-screen transition-all duration-300;
+    background: linear-gradient(to bottom, 
+      hsl(var(--background)) 0%,
+      hsl(var(--background-end)) 100%);
+    color: hsl(var(--foreground));
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .btn {
+    @apply px-4 py-2 rounded-md font-medium transition-all duration-200;
+  }
+
+  .btn-primary {
+    @apply bg-black text-white dark:bg-white dark:text-black 
+           hover:bg-opacity-90 transition-all duration-200;
+  }
+
+  .card {
+    @apply bg-white dark:bg-gray-800 
+           shadow-lg rounded-lg overflow-hidden
+           transition-all duration-200;
+  }
+}
+
+@layer utilities {
+  .animate-glow {
+    @apply pointer-events-none;
+    background: radial-gradient(
+      circle at 50% 50%,
+      rgba(59, 130, 246, 0.15) 0%,
+      rgba(1, 10, 26, 0.95) 100%
+    );
+    filter: blur(40px);
+    animation: pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.animate-gradient {
+  background: linear-gradient(-45deg, #010A1A, #010A1A, #1E3A8A, #3B82F6);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  box-shadow: 0 0 200px rgba(1, 10, 26, 0.8);
+}
+
+.dark .animate-gradient {
+  background: linear-gradient(-45deg, #010A1A, #010A1A, #1E3A8A, #2563EB);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  box-shadow: 0 0 200px rgba(1, 10, 26, 0.9);
 }
